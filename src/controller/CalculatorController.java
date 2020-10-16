@@ -32,4 +32,8 @@ public class CalculatorController {
         solutionLabel.setText(String.valueOf(engine.eval(calculation)));
         calculation = "";
     }
+
+    public void clear(){
+        solutionLabel.setText("");
+    }
 }
