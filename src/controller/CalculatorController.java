@@ -1,6 +1,5 @@
 package controller;
 
-
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,21 +18,30 @@ public class CalculatorController {
 
     public void mouseClick(Event e){
         Button source = (Button) e.getSource();
-        System.out.println(source.getText());
         calculation += source.getText();
 
         solutionLabel.setText(calculation);
     }
 
-    public void eval() throws ScriptException {
+    public void eval() {
+
         ScriptEngineManager mgr = new ScriptEngineManager();
         ScriptEngine engine = mgr.getEngineByName("JavaScript");
+        String solution = "";
 
-        solutionLabel.setText(String.valueOf(engine.eval(calculation)));
-        calculation = "";
+        try {
+            solution = String.valueOf(engine.eval(calculation));
+        } catch (ScriptException e) {
+            e.printStackTrace();
+            calculation = "";
+        }
+
+        solutionLabel.setText(solution);
+        calculation = solution;
     }
 
     public void clear(){
         solutionLabel.setText("");
+        calculation = "";
     }
 }
